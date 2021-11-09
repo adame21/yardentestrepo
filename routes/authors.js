@@ -49,9 +49,31 @@ router.get('/author/:id', async (req, res, next) => {
 
 })
 
-router.post('/author', (req, res, next) => {
+router.post('/author', async (req, res, next) => {
+
+    try {
+
+        const firstName = req.body.firstName
+        const lastName = req.body.lastName
+
+        const createRes = await dbCon("authors")
+            .insert({
+                firstName,
+                lastName
+            })
 
 
+        res.json({
+            status: "ok"
+        })
+
+    } catch (err) {
+
+        console.log(err);
+        res.json({
+            status: err.message
+        })
+    }
 
 })
 

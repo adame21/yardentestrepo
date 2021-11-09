@@ -48,9 +48,42 @@ router.get('/book/:id', async (req, res, next) => {
 
 })
 
-router.post('/book', (req, res, next) => {
+router.post('/book', async (req, res, next) => {
 
+    try {
 
+        let bookName = req.body.bookName
+        let isbn = req.body.isbn
+        let author = req.body.author
+
+        let authorResponse = await dbCon("authors")
+            .select("id")
+            .where("firstName", "like", `%${author}%`)
+            .orWhere("lastName", "like", `%${author}%`)
+
+        if (authorResponse.length == 0) throw Error("author not found")
+
+        let authorId = authorResponse[0].id
+
+        await dbCon("books")
+            .insert({
+                bookName,
+                isbn,
+                authorId
+            })
+
+        res.json({
+            status: "ok"
+        })
+
+    }
+    catch (err) {
+
+        res.json({
+            status: err.message
+        })
+
+    }
 
 })
 

@@ -10,20 +10,17 @@ function App() {
   let [authors, setAuthors] = useState([])
 
   let [shownBook, setShownBook] = useState({})
-  let [shownAuthor, setShownAuthor] = useState({})
 
   useEffect(() => {
 
     async function fetchBooks() {
       let books = await fetch('/books')
       let booksData = await books.json()
-      console.log(booksData);
       setBooks(booksData)
     }
     async function fetchAuthors() {
       let authors = await fetch('/authors')
       let authorsData = await authors.json()
-      console.log(authorsData);
       setAuthors(authorsData)
     }
 
@@ -32,19 +29,40 @@ function App() {
 
   }, [])
 
+  function getAuthor(authId) {
+    let author = authors.filter(auth => auth.id == authId)
+    author = author[0].firstName + " " + author[0].lastName
+    return author
+  }
+
   return (
     <div className="container-fluid">
       <div className="text-center">
 
         <h1>Welcome to skimarztki :)</h1>
-        <div className="row">
-          <div className="col">
-            
-          </div>
-        </div>
+        {(() => {
+          if (Object.keys(shownBook).length !== 0) {
+            return (
+              <div className="row">
+                <div className="col-6">
+                  Selected book:
+                  <br></br>
+                  Name: {shownBook.bookName}
+                  <br></br>
+                  Serial number: {shownBook.isbn}
+                  <br></br>
+                  Author: {getAuthor(shownBook.authorId)}
+                </div>
+                <div className="col-6">
+
+                </div>
+              </div>
+            )
+          }
+        })()}
         <div className="row">
           <div className="col-6">
-            <Books bookList={books}></Books>
+            <Books setShownBook={setShownBook} bookList={books}></Books>
           </div>
           <div className="col-6">
             <Authors authorList={authors}></Authors>
