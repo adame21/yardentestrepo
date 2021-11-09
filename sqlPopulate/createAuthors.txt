@@ -1,0 +1,6 @@
+CREATE TABLE `yardentestdb`.`authors` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `firstName` NVARCHAR(255) NOT NULL,
+  `lastName` NVARCHAR(255) NOT NULL,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  PRIMARY KEY (`id`));

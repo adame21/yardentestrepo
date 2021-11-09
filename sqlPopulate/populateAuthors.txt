@@ -1,0 +1,9 @@
+
+INSERT INTO `yardentestdb`.`authors`
+(`id`,
+`firstName`,
+`lastName`)
+VALUES
+(1,
+'jo',
+'morgo');

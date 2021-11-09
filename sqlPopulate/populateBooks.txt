@@ -1,0 +1,10 @@
+INSERT INTO `yardentestdb`.`books`
+(`id`,
+`bookName`,
+`isbn`,
+`authorId`)
+VALUES
+(1,
+'testbook1',
+'0001',
+1);
